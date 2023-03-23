@@ -27,7 +27,7 @@ class _reporttState extends State<reportt> {
     setState(() {
       titulo = widget.docid.get('Titulo');
       descripcion = widget.docid.get('Descripcion');
-      link = widget.docid.get('link');
+      link = widget.docid.get('Link');
     });
 
     super.initState();
@@ -36,11 +36,7 @@ class _reporttState extends State<reportt> {
   @override
   Widget build(BuildContext context) {
     return PdfPreview(
-      // maxPageWidth: 1000,
-      // useActions: false,
-      // canChangePageFormat: true,
       canChangeOrientation: false,
-      // pageFormats:pageformat,
       canDebug: false,
 
       build: (format) => generateDocument(
@@ -54,7 +50,6 @@ class _reporttState extends State<reportt> {
 
     final font1 = await PdfGoogleFonts.openSansRegular();
     final font2 = await PdfGoogleFonts.openSansBold();
-    // final image = await imageFromAssetBundle('assets/r2.svg');
 
     String? _logo = await rootBundle.loadString('assets/r2.svg');
 
@@ -89,7 +84,7 @@ class _reporttState extends State<reportt> {
               ),
               pw.Center(
                 child: pw.Text(
-                  'Final Report card',
+                  'PDF',
                   style: pw.TextStyle(
                     fontSize: 50,
                   ),
@@ -120,13 +115,30 @@ class _reporttState extends State<reportt> {
                 mainAxisAlignment: pw.MainAxisAlignment.center,
                 children: [
                   pw.Text(
-                    'Descripcion: ',
+                    'Descripcion : ',
                     style: pw.TextStyle(
                       fontSize: 50,
                     ),
                   ),
                   pw.Text(
                     descripcion,
+                    style: pw.TextStyle(
+                      fontSize: 50,
+                    ),
+                  ),
+                ],
+              ),
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.center,
+                children: [
+                  pw.Text(
+                    'Link : ',
+                    style: pw.TextStyle(
+                      fontSize: 50,
+                    ),
+                  ),
+                  pw.Text(
+                    link,
                     style: pw.TextStyle(
                       fontSize: 50,
                     ),

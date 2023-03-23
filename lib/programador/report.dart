@@ -27,7 +27,7 @@ class _reporttState extends State<reportt> {
     setState(() {
       titulo = widget.docid.get('Titulo');
       descripcion = widget.docid.get('Descripcion');
-      link = widget.docid.get('link');
+      link = widget.docid.get('Link');
     });
 
     super.initState();
@@ -84,7 +84,7 @@ class _reporttState extends State<reportt> {
               ),
               pw.Center(
                 child: pw.Text(
-                  'Pdf Para guardar',
+                  'PDF',
                   style: pw.TextStyle(
                     fontSize: 50,
                   ),
@@ -98,7 +98,7 @@ class _reporttState extends State<reportt> {
                 mainAxisAlignment: pw.MainAxisAlignment.center,
                 children: [
                   pw.Text(
-                    'Titulo: ',
+                    'Titulo : ',
                     style: pw.TextStyle(
                       fontSize: 50,
                     ),
@@ -115,7 +115,7 @@ class _reporttState extends State<reportt> {
                 mainAxisAlignment: pw.MainAxisAlignment.center,
                 children: [
                   pw.Text(
-                    'Descripcion: ',
+                    'Descripcion : ',
                     style: pw.TextStyle(
                       fontSize: 50,
                     ),
@@ -132,7 +132,7 @@ class _reporttState extends State<reportt> {
                 mainAxisAlignment: pw.MainAxisAlignment.center,
                 children: [
                   pw.Text(
-                    'link: ',
+                    'Link : ',
                     style: pw.TextStyle(
                       fontSize: 50,
                     ),
