@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:segundo_parcial/docente/docente.dart';
+import 'package:segundo_parcial/docente/php.dart';
+import 'package:segundo_parcial/docente/phyton.dart';
 
 import '../login.dart';
 import 'addpublic.dart';
@@ -10,15 +13,15 @@ import 'editpublic.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(Programador());
+  runApp(JAVAPAGE());
 }
 
-class Programador extends StatefulWidget {
+class JAVAPAGE extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<Programador> {
+class _MyAppState extends State<JAVAPAGE> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -38,8 +41,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final Stream<QuerySnapshot> _usersStream =
-      FirebaseFirestore.instance.collection('report').snapshots();
+  final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance
+    .collection('report')
+    .where('Categoria', isEqualTo: 'JAVA')
+    .snapshots();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +53,7 @@ class _HomeState extends State<Home> {
         backgroundColor: Color.fromARGB(255, 0, 11, 133),
         onPressed: () {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => addnote()));
+              context, MaterialPageRoute(builder: (_) => AddNote()));
         },
         child: Icon(
           Icons.add,
@@ -55,7 +61,69 @@ class _HomeState extends State<Home> {
       ),
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 0, 11, 133),
-        title: Text('Programador'),
+        title: Text('Docente'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 0, 11, 133),
+              ),
+              child: Center(
+                child: Text(
+                  'Menú',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text(
+                'Inicio',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Docente()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text(
+                'PHP Categoria',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PHPPAGE()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text(
+                'PHYTON Categoria',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PHYTONPAGE()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: StreamBuilder(
         stream: _usersStream,
@@ -104,9 +172,15 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           title: Text(
-                            snapshot.data!.docChanges[index].doc['Titulo'],
+                            snapshot.data!.docs[index]['Titulo'],
                             style: TextStyle(
                               fontSize: 20,
+                            ),
+                          ),
+                          subtitle: Text(
+                            snapshot.data!.docs[index]['Categoria'],
+                            style: TextStyle(
+                              fontSize: 16,
                             ),
                           ),
                           contentPadding: EdgeInsets.symmetric(
@@ -115,6 +189,9 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 4,
+                      ),
                     ],
                   ),
                 );
@@ -122,16 +199,6 @@ class _HomeState extends State<Home> {
             ),
           );
         },
-      ),
-    );
-  }
-  Future<void> logout(BuildContext context) async {
-    CircularProgressIndicator();
-    await FirebaseAuth.instance.signOut();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => LoginPage(),
       ),
     );
   }

@@ -1,12 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'programador.dart';
+import 'docente.dart';
 
-class addnote extends StatelessWidget {
+class AddNote extends StatefulWidget {
+  @override
+  _AddNoteState createState() => _AddNoteState();
+}
+
+class _AddNoteState extends State<AddNote> {
   TextEditingController titulo = TextEditingController();
   TextEditingController descripcion = TextEditingController();
   TextEditingController link = TextEditingController();
+  String categoria = 'PHP';
 
   CollectionReference ref = FirebaseFirestore.instance.collection('report');
 
@@ -21,7 +27,8 @@ class addnote extends StatelessWidget {
               ref.add({
                 'Titulo': titulo.text,
                 'Descripcion': descripcion.text,
-                'Link': link.text
+                'Link': link.text,
+                'Categoria': categoria // agregar la categoría a la base de datos
               }).whenComplete(() {
                 Navigator.pushReplacement(
                     context, MaterialPageRoute(builder: (_) => Home()));
@@ -84,6 +91,28 @@ class addnote extends StatelessWidget {
                 decoration: InputDecoration(
                   hintText: 'link',
                 ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            // Agregar menú desplegable para seleccionar la categoría
+            DropdownButtonFormField(
+              value: categoria,
+              onChanged: (newValue) {
+                setState(() {
+                  categoria = newValue.toString();
+                });
+              },
+              items: <String>['PHP', 'JAVA', 'PHYTON'].map((String value) {
+                return DropdownMenuItem(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              decoration: InputDecoration(
+                labelText: 'Categoría',
+                border: OutlineInputBorder(),
               ),
             ),
           ],

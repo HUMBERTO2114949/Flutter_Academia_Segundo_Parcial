@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:segundo_parcial/programador/programador.dart';
+import 'package:segundo_parcial/administrador/administrador.dart';
+import 'package:segundo_parcial/docente/docente.dart';
 import 'estudiante/estudiante.dart';
 import 'register.dart';
 
@@ -183,33 +184,41 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void route() {
-    User? user = FirebaseAuth.instance.currentUser;
-    var kk = FirebaseFirestore.instance
-            .collection('users')
-            .doc(user!.uid)
-            .get()
-            .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        if (documentSnapshot.get('rool') == "Programador") {
-           Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>  Programador(),
-          ),
-        );
-        }else{
-          Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>  Estudiante(),
-          ),
-        );
-        }
-      } else {
-        print('El documento no existe en la base de datos.');
+  User? user = FirebaseAuth.instance.currentUser;
+  var kk = FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+    if (documentSnapshot.exists) {
+      if (documentSnapshot.get('rool') == "Docente") {
+         Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>  Docente(),
+        ),
+      );
+      } else if (documentSnapshot.get('rool') == "Administrador") {
+         Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>  Administrador(),
+        ),
+      );
+      } else if (documentSnapshot.get('rool') == "Estudiante") {
+         Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>  Estudiante(),
+        ),
+      );
       }
-    });
-  }
+    } else {
+      print('El documento no existe en la base de datos.');
+    }
+  });
+}
+
 
   void signIn(String email, String password) async {
     if (_formkey.currentState!.validate()) {

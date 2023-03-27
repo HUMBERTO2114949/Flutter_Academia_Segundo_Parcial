@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'estudiante.dart';
+import 'docente.dart';
 import 'report.dart';
 
 class editnote extends StatefulWidget {
@@ -40,10 +40,45 @@ class _editnoteState extends State<editnote> {
           MaterialButton(
             onPressed: () {
               Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (_) => Estudiante()));
+                  context, MaterialPageRoute(builder: (_) => Home()));
             },
             child: Text(
               "Regresar",
+              style: TextStyle(
+                fontSize: 20,
+                color: Color.fromARGB(255, 251, 251, 251),
+              ),
+            ),
+          ),
+          MaterialButton(
+            onPressed: () {
+              widget.docid.reference.update({
+                'Titulo': titulo.text,
+                'Descripcion': descripcion.text,
+                'Link': link.text,
+                'Categoria': categoriaSeleccionada
+              }).whenComplete(() {
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (_) => Home()));
+              });
+            },
+            child: Text(
+              "Guardar",
+              style: TextStyle(
+                fontSize: 20,
+                color: Color.fromARGB(255, 251, 251, 251),
+              ),
+            ),
+          ),
+          MaterialButton(
+            onPressed: () {
+              widget.docid.reference.delete().whenComplete(() {
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (_) => Home()));
+              });
+            },
+            child: Text(
+              "Eliminar",
               style: TextStyle(
                 fontSize: 20,
                 color: Color.fromARGB(255, 251, 251, 251),
@@ -66,7 +101,6 @@ class _editnoteState extends State<editnote> {
                   decoration: InputDecoration(
                     hintText: 'Titulo',
                   ),
-                  enabled: false,
                 ),
               ),
               SizedBox(
@@ -81,7 +115,6 @@ class _editnoteState extends State<editnote> {
                   decoration: InputDecoration(
                     hintText: 'Descripcion',
                   ),
-                  enabled: false,
                 ),
               ),
               SizedBox(
@@ -96,7 +129,6 @@ class _editnoteState extends State<editnote> {
                   decoration: InputDecoration(
                     hintText: 'link',
                   ),
-                  enabled: false,
                 ),
               ),
               SizedBox(

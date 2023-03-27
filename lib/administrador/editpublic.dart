@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'programador.dart';
+import 'administrador.dart';
 import 'report.dart';
 
 class editnote extends StatefulWidget {
@@ -38,7 +38,7 @@ class _editnoteState extends State<editnote> {
           MaterialButton(
             onPressed: () {
               Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (_) => Home()));
+                  context, MaterialPageRoute(builder: (_) => Administrador()));
             },
             child: Text(
               "Regresar",
@@ -56,7 +56,7 @@ class _editnoteState extends State<editnote> {
                 'Link': link.text
               }).whenComplete(() {
                 Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (_) => Home()));
+                    context, MaterialPageRoute(builder: (_) => Administrador()));
               });
             },
             child: Text(
@@ -71,7 +71,7 @@ class _editnoteState extends State<editnote> {
             onPressed: () {
               widget.docid.reference.delete().whenComplete(() {
                 Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (_) => Home()));
+                    context, MaterialPageRoute(builder: (_) => Administrador()));
               });
             },
             child: Text(

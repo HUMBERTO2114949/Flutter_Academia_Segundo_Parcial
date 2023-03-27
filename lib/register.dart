@@ -29,7 +29,8 @@ class _RegisterState extends State<Register> {
   File? file;
   var options = [
     'Estudiante',
-    'Programador',
+    'Docente',
+    'Administrador',
   ];
   var _currentItemSelected = "Estudiante";
   var rool = "Estudiante";
@@ -122,7 +123,7 @@ class _RegisterState extends State<Register> {
                                 }),
                             filled: true,
                             fillColor: Colors.white,
-                            hintText: 'Password',
+                            hintText: 'Contraseña',
                             enabled: true,
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 15.0),
